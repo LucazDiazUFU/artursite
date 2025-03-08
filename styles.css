@@ -226,23 +226,6 @@ footer .social a:hover img {
     filter: grayscale(0%);
 }
 
-/* Ajuste responsivo */
-@media (max-width: 768px) {
-    .sobre {
-        flex-direction: column;
-        text-align: center;
-        padding: 30px;
-    }
-
-    .conteudo, .video-container {
-        width: 100%;
-    }
-
-    .video-container video {
-        width: 100%;
-    }
-}
-
 /* Seção Hero com imagem de fundo */
 .hero.image-bg {
     height: 100vh; /* Ocupa a tela inteira */
@@ -362,4 +345,128 @@ footer .social a:hover img {
     color: #ddd;
     line-height: 1.5;
     margin-top: 10px; /* Adiciona um pequeno espaçamento acima da descrição */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 1024px) {
+    header {
+        padding: 8px 20px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    nav ul li {
+        margin: 0 40px;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero1 .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    .agenda .container {
+        left: 60%;
+    }
+
+    .agenda h1 {
+        font-size: 30px;
+    }
+
+    .agenda .descricao {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 8px 10px;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    nav ul li {
+        margin: 0 20px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero1 .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .agenda .container {
+        left: 50%;
+        top: 30%;
+    }
+
+    .agenda h1 {
+        font-size: 24px;
+    }
+
+    .agenda .descricao {
+        font-size: 14px;
+    }
+
+    footer {
+        padding: 10px 15px;
+    }
+
+    footer .social a {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 8px 5px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .hero1 .btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .agenda .container {
+        left: 40%;
+        top: 35%;
+    }
+
+    .agenda h1 {
+        font-size: 20px;
+    }
+
+    .agenda .descricao {
+        font-size: 12px;
+    }
+
+    footer {
+        padding: 5px 10px;
+    }
+
+    footer .social a {
+        font-size: 14px;
+    }
 }
