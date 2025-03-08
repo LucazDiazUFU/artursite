@@ -1,0 +1,370 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Remover barras de rolagem */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Estilizando o cabeçalho */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0);
+    padding: 8px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+/* Ajustando a logo */
+.logo {
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.logo img {
+    height: 80px;
+    width: auto;
+    display: block;
+}
+
+/* Menu de navegação */
+nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 90px;
+    position: relative;
+    top: -20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+/* Efeito hover com linha branca abaixo */
+nav ul li a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease-in-out;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Seção Hero para index.html (com vídeo) */
+.hero.video-bg {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero.video-bg video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Aumentando o brilho da imagem de fundo */
+.hero.image-bg {
+    height: 100vh;
+    background: url('lucas.png') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+    filter: brightness(2.2); /* Aumenta o brilho em 20% */
+}
+
+
+.hero .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+/* Botão "VER AGENDA" no Index */
+.hero1 .btn {
+    position: absolute;
+    bottom: 10%; /* Ajuste a posição vertical aqui */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    padding: 12px 24px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+/* Torna o botão um link clicável */
+.btn a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    padding: 12px 24px;
+}
+
+/* Efeito hover */
+.btn:hover {
+    background: white;
+    color: black;
+    box-shadow: 7px 7px 12px rgba(0, 0, 255, 0.7);
+}
+
+/* Ajustando a seção do vídeo */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#videoSobre {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+/* Ajuste para as redes sociais */
+footer .social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+}
+
+/* Ícones das redes sociais */
+footer .social a {
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+
+footer .social a img {
+    width: 16px;
+    height: 16px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease-in-out;
+}
+
+footer .social a:hover img {
+    filter: grayscale(0%);
+}
+
+/* Ajuste responsivo */
+@media (max-width: 768px) {
+    .sobre {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .conteudo, .video-container {
+        width: 100%;
+    }
+
+    .video-container video {
+        width: 100%;
+    }
+}
+
+/* Seção Hero com imagem de fundo */
+.hero.image-bg {
+    height: 100vh; /* Ocupa a tela inteira */
+    background: url('lucas.png') no-repeat center center/cover;
+    display: flex;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    position: relative;
+    color: white;
+    padding: 80px 10%; /* Ajuste do espaçamento lateral */
+}
+
+/* Fundo escuro para melhor legibilidade */
+.hero .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Biografia sobreposta */
+.hero .biografia {
+    position: relative;
+    z-index: 2;
+    max-width: 500px; /* Reduzindo a largura do texto */
+    text-align: left;
+    background: rgba(0, 0, 0, 0); /* Fundo semi-transparente */
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 50px; /* Ajuste de distância do topo */
+    
+    /* Ajuste para mover para o lado esquerdo */
+    margin-left: -5%; /* Mova ajustando essa porcentagem */
+    /* OU use transform para ajuste fino */
+    transform: translateX(-50px); /* Mova para a esquerda (negativo) ou direita (positivo) */
+}
+
+
+/* Estilizando o texto */
+.hero .texto {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+    color: #f1f1f1;
+    margin-bottom: 15px;
+}
+
+/* Citação abaixo da biografia */
+.hero .citação {
+    font-size: 20px;
+    font-style: italic;
+    font-family: 'Times New Roman', serif;
+    color: #e4e4e2; /* Destaque na citação */
+    border-left: 5px solid #f5a40220;
+    padding-left: 15px;
+    margin-top: 30px;
+}
+
+/* Autor da citação */
+.hero .citação span {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff6600;
+    margin-top: 5px;
+}
+
+/* Estilizando a seção Agenda com imagem de fundo */
+.agenda {
+    background: url('sobre.png') no-repeat center center/cover;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center;
+    height: 100vh;
+    padding-right: 10%; /* Ajuste conforme necessário */
+}
+
+.agenda .container {
+    text-align: center; /* Centraliza o conteúdo dentro do container */
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0); /* Fundo escuro semi-transparente */
+    padding: 25px;
+    border-radius: 10px;
+    position: absolute; /* Permite mover o container de acordo com as coordenadas */
+    top: 25%; /* Posição inicial, centralizado verticalmente */
+    left: 70%; /* Posição inicial, centralizado horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para garantir que o container esteja centralizado em relação ao topo e à esquerda */
+}
+
+.agenda h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff; /* Cor do texto */
+    position: absolute; /* Permite o posicionamento absoluto da linha */
+    top: -20%; /* Posição inicial vertical */
+    left: 20%; /* Posição inicial horizontal */
+    transform: translate(-50%, -50%); /* Centraliza a linha em relação ao ponto top/left */
+    margin: 0; /* Remove a margem padrão */
+    margin-bottom: 10px; /* Adiciona uma margem entre o título e a linha */
+}
+
+.agenda .line {
+    width: 80px;
+    height: 3px;
+    background: #b30000;
+    position: absolute; /* Permite o posicionamento absoluto da linha */
+    top: 5%; /* Posição inicial vertical */
+    left: 25%; /* Posição inicial horizontal */
+    transform: translate(-50%, -50%); /* Centraliza a linha em relação ao ponto top/left */
+    margin: 0; /* Remove a margem padrão */
+}
+
+
+.agenda .descricao {
+    font-size: 18px;
+    color: #ddd;
+    line-height: 1.5;
+    margin-top: 10px; /* Adiciona um pequeno espaçamento acima da descrição */
+}
+
+
