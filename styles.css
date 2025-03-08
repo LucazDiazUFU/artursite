@@ -19,7 +19,7 @@ header {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0);
-    padding: 8px 20px;
+    padding: 8px 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,7 +52,7 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 20px;
+    margin: 0 90px;
     position: relative;
     top: -20px;
 }
