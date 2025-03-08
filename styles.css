@@ -19,7 +19,7 @@ header {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0);
-    padding: 8px 50px;
+    padding: 8px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,7 +52,7 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 90px;
+    margin: 0 20px;
     position: relative;
     top: -20px;
 }
@@ -347,53 +347,46 @@ footer .social a:hover img {
     margin-top: 10px; /* Adiciona um pequeno espaçamento acima da descrição */
 }
 
-/* Ajustes responsivos */
-@media (max-width: 1024px) {
-    header {
-        padding: 8px 20px;
-    }
-
-    .logo img {
-        height: 60px;
-    }
-
-    nav ul li {
-        margin: 0 40px;
-    }
-
-    .hero h1 {
-        font-size: 40px;
-    }
-
-    .hero1 .btn {
-        font-size: 16px;
-        padding: 10px 20px;
-    }
-
-    .agenda .container {
-        left: 60%;
-    }
-
-    .agenda h1 {
-        font-size: 30px;
-    }
-
-    .agenda .descricao {
-        font-size: 16px;
-    }
+/* Menu Hamburguer para telas pequenas */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 101;
 }
 
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Ajustes responsivos */
 @media (max-width: 768px) {
-    header {
-        padding: 8px 10px;
+    .menu-toggle {
+        display: flex;
     }
 
-    .logo img {
-        height: 50px;
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    nav ul.active {
+        display: flex;
     }
 
     nav ul li {
-        margin: 0 20px;
+        margin: 10px 0;
+        top: 0;
     }
 
     .hero h1 {
@@ -428,18 +421,6 @@ footer .social a:hover img {
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 8px 5px;
-    }
-
-    .logo img {
-        height: 40px;
-    }
-
-    nav ul li {
-        margin: 0 10px;
-    }
-
     .hero h1 {
         font-size: 24px;
     }
