@@ -114,7 +114,6 @@ nav ul li a:hover::after {
     filter: brightness(2.2); /* Aumenta o brilho em 20% */
 }
 
-
 .hero .overlay {
     position: absolute;
     width: 100%;
@@ -284,7 +283,6 @@ footer .social a:hover img {
     transform: translateX(-50px); /* Mova para a esquerda (negativo) ou direita (positivo) */
 }
 
-
 /* Estilizando o texto */
 .hero .texto {
     font-size: 18px;
@@ -359,12 +357,9 @@ footer .social a:hover img {
     margin: 0; /* Remove a margem padrão */
 }
 
-
 .agenda .descricao {
     font-size: 18px;
     color: #ddd;
     line-height: 1.5;
     margin-top: 10px; /* Adiciona um pequeno espaçamento acima da descrição */
 }
-
-
