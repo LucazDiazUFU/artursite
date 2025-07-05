@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
+const db = require('./database');
 
 // Configurações
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -52,33 +53,10 @@ const ESTADOS = {
 // Armazenar estado dos usuários
 const userStates = new Map();
 
-// Função para carregar eventos
+// Função para carregar eventos (agora do MySQL)
+// Funções auxiliares mantidas para compatibilidade
 async function carregarEventos() {
-  try {
-    const data = await fs.readFile(EVENTOS_FILE, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.log('📁 Criando arquivo de eventos...');
-    await salvarEventos([]);
-    return [];
-  }
-}
-
-// Função para salvar eventos
-async function salvarEventos(eventos) {
-  try {
-    await fs.writeFile(EVENTOS_FILE, JSON.stringify(eventos, null, 2));
-    return true;
-  } catch (error) {
-    console.error('❌ Erro ao salvar eventos:', error);
-    return false;
-  }
-}
-
-// Função para gerar próximo ID
-async function gerarProximoId() {
-  const eventos = await carregarEventos();
-  return eventos.length > 0 ? Math.max(...eventos.map(e => e.id)) + 1 : 1;
+  return await db.carregarEventos();
 }
 
 // Função para formatar data
@@ -302,29 +280,23 @@ bot.onText(/\/remove (\d+)/, async (msg, match) => {
   const eventoId = parseInt(match[1]);
   
   try {
-    const eventos = await carregarEventos();
-    const eventoIndex = eventos.findIndex(e => e.id === eventoId);
+    // Buscar o evento antes de remover para mostrar informações
+    const evento = await db.buscarEventoPorId(eventoId);
     
-    if (eventoIndex === -1) {
+    if (!evento) {
       await bot.sendMessage(chatId, `❌ Show com ID ${eventoId} não encontrado.`);
       return;
     }
     
-    const eventoRemovido = eventos[eventoIndex];
-    eventos.splice(eventoIndex, 1);
-    
-    const sucesso = await salvarEventos(eventos);
+    const sucesso = await db.removerEvento(eventoId);
     
     if (sucesso) {
       await bot.sendMessage(chatId, 
-        `✅ *Show removido com sucesso!*
-
-` +
-        `🎵 ${eventoRemovido.titulo}
-` +
-        `📅 ${eventoRemovido.data} às ${eventoRemovido.horario}
-` +
-        `📍 ${eventoRemovido.local}`,
+        `✅ *Show removido com sucesso!*\n\n` +
+        `🎵 ${evento.titulo}\n` +
+        `📅 ${evento.data} às ${evento.horario}\n` +
+        `📍 ${evento.local}\n\n` +
+        `🗑️ Evento removido do banco de dados e da agenda do site!`,
         { parse_mode: 'Markdown' }
       );
     } else {
@@ -627,22 +599,17 @@ async function handleDescriptionInput(chatId, userId, texto, userState) {
   
   // Finalizar criação do evento
   try {
-    const eventos = await carregarEventos();
-    const novoId = await gerarProximoId();
-    
     const novoEvento = {
-      id: novoId,
       titulo: userState.evento.titulo,
       data: userState.evento.data,
       horario: userState.evento.horario,
       local: userState.evento.local,
       fotos: userState.evento.fotos,
-      descricao: userState.evento.descricao || null,
-      criadoEm: new Date().toISOString()
+      descricao: userState.evento.descricao || null
     };
     
-    eventos.push(novoEvento);
-    const sucesso = await salvarEventos(eventos);
+    const novoId = await db.salvarEvento(novoEvento);
+    const sucesso = novoId > 0;
     
     if (sucesso) {
       const dataFormatada = formatarData(novoEvento.data);
@@ -662,10 +629,10 @@ async function handleDescriptionInput(chatId, userId, texto, userState) {
 ` +
         `${novoEvento.descricao ? `📝 ${novoEvento.descricao}
 ` : ''}` +
-        `🆔 ID: ${novoEvento.id}
+        `🆔 ID: ${novoId}
 
 ` +
-        `✨ O show já está disponível na agenda do site!`,
+        `✨ O show já está disponível na agenda do site e sincronizado com o banco de dados!`,
         { parse_mode: 'Markdown' }
       );
     } else {
@@ -684,7 +651,7 @@ async function handleDescriptionInput(chatId, userId, texto, userState) {
 // API REST para o site
 app.get('/api/eventos', async (req, res) => {
   try {
-    const eventos = await carregarEventos();
+    const eventos = await db.carregarEventos();
     res.json(eventos);
   } catch (error) {
     console.error('❌ Erro na API:', error);
