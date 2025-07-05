@@ -17,8 +17,21 @@ if (!BOT_TOKEN) {
   process.exit(1);
 }
 
-// Inicializar bot e servidor
-const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+// Detectar ambiente
+const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER;
+
+// Inicializar bot com configuração baseada no ambiente
+let bot;
+if (isProduction) {
+  // Em produção, usar webhook (sem polling)
+  bot = new TelegramBot(BOT_TOKEN, { polling: false });
+  console.log('🔗 Bot configurado para WEBHOOK (produção)');
+} else {
+  // Em desenvolvimento, usar polling
+  bot = new TelegramBot(BOT_TOKEN, { polling: true });
+  console.log('🔄 Bot configurado para POLLING (desenvolvimento)');
+}
+
 const app = express();
 
 // Middlewares
@@ -685,9 +698,34 @@ app.get('/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     bot: 'Artur Almeida Bot',
-    version: '1.0.0'
+    version: '1.0.0',
+    mode: isProduction ? 'webhook' : 'polling'
   });
 });
+
+// Configuração do webhook para produção
+if (isProduction) {
+  const webhookUrl = `https://artur-almeida-bot.onrender.com/webhook/${BOT_TOKEN}`;
+  
+  // Endpoint para receber updates do Telegram
+  app.post(`/webhook/${BOT_TOKEN}`, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+  });
+  
+  // Configurar webhook após inicializar servidor
+  const setupWebhook = async () => {
+    try {
+      await bot.setWebHook(webhookUrl);
+      console.log('🔗 Webhook configurado:', webhookUrl);
+    } catch (error) {
+      console.error('❌ Erro ao configurar webhook:', error);
+    }
+  };
+  
+  // Configurar webhook após um pequeno delay
+  setTimeout(setupWebhook, 2000);
+}
 
 // Inicializar servidor
 app.listen(PORT, () => {
